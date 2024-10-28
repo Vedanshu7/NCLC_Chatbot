@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chin tapak dum dum</title>
+        <link rel="stylesheet" href="styles.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+            header {
+                background: #007BFF;
+                color: white;
+                padding: 10px 0;
+                text-align: center;
+            }
+            nav {
+                margin: 10px 0;
+            }
+            nav a {
+                margin: 0 15px;
+                color: white;
+                text-decoration: none;
+            }
+            .container {
+                width: 80%;
+                margin: auto;
+                overflow: hidden;
+            }
+            section {
+                background: white;
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 5px;
+            }
+            footer {
+                text-align: center;
+                padding: 10px 0;
+                background: #007BFF;
+                color: white;
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    
+    <header>
+        <h1>Welcome to Course Information Website</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#curriculum">Curriculum</a>
+            <a href="#enroll">Enroll Now</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <section id="about">
+            <h2>About the Website</h2>
+            <p>This website offers an in-depth look into all the courses. You'll learn key concepts of your desired course.</p>
+        </section>
+    
+        <section id="enroll">
+            <h2>Enroll Now</h2>
+            <p>Ready to start your journey? Click the button below to enroll!</p>
+            <button onclick="window.location.href='enrollment.html'">Enroll Here</button>
+        </section>
+    
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions, feel free to reach out!</p>
+            <p>Email: info@coursewebsite.com</p>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 Courses Information. All rights reserved.</p>
+    </footer>
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy Website with Botpress Chatbot</title>
+
+</head>
+
+<body>
+
+    <!-- Read PDF file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+    <!-- Botpress Chatbot Scripts -->
+    
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2024/10/03/20/20241003205856-19POD559.js"></script>
+
+
+    <script>
+        let isBot = false;
+        // Listening to a message received event=
+        window.botpress.on('*', (event) => {
+            isBot = true;
+            if (event.type === "message") {
+                console.log("A new message was received!");
+                console.log(event)
+                const message_received = event?.payload?.payload?.blocks?.[0]?.block?.text ?? event?.payload?.payload?.block?.text;
+                if (message_received === 'Please choose a file') {
+                    triggerFileUploadOnLoad();
+                }
+            }
+        });
+
+        function triggerFileUploadOnLoad() {
+            // Create a hidden file input element
+            const fileInput = document.createElement('input');
+            let errorMessage = '';
+            fileInput.type = "file";
+            fileInput.style.display = "none"; // Hide the file input
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                console.log('Selected file:', file);
+                let fileContent = '';
+                const title = file.name;
+                const type_of_doc = file.type;
+                const reader = new FileReader();
+                type_of_doc === 'application/pdf' ? reader.readAsArrayBuffer(file) : reader.readAsText(file);
+                reader.onload = async function (event) {
+                    console.log('File name:', title);
+                    console.log('File type:', type_of_doc)
+
+                    if (type_of_doc === 'application/pdf') 
+                    {
+                        const pdfData = new Uint8Array(event.target.result);
+                        fileContent = await extractPDFText(pdfData); 
+                    }
+                    else if(type_of_doc === 'text/plain')
+                    {
+                        fileContent= event.target.result;
+                    }
+                    else 
+                    {
+                        errorMessage = 'Please upload the supported files. pdf and txt only'
+                    }
+
+                    console.log('File content:', fileContent.slice(0, 100));
+                    if (isBot) {
+                        window.botpress.sendEvent({
+                            type: 'trigger',
+                            payload: {
+                                title: title,
+                                content: fileContent,
+                                type_of_doc: type_of_doc,
+                                error: errorMessage
+                            }
+                        }
+                        )
+                    }
+                };
+            })
+
+
+            // Automatically trigger the file input on page load
+            fileInput.click();
+
+            // Append the file input to the body
+            document.body.appendChild(fileInput);
+        }
+        // Function to extract text from a single page
+        async function getTextFromPage(page) {
+            const textContent = await page.getTextContent();
+            let pageText = '';
+            textContent.items.forEach(function (item) {
+            pageText += item.str + ' '; // Append each line of text
+            });
+            return pageText;
+        }
+
+        // Function to process the PDF
+        async function extractPDFText(pdfData) {
+            const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+            const pdf = await loadingTask.promise;
+            let fullText = ''; // Initialize an empty string to store the entire PDF text
+
+            // Loop through all pages
+            for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const pageText = await getTextFromPage(page); // Extract text from the current page
+            fullText += pageText + '\n'; // Append text to the full document text
+            }
+
+            return fullText; // Return the complete extracted text
+        }
+    </script>
+
+</body>
+
+</html>
