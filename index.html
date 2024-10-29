@@ -3,28 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Chin tapak dum dum</title>
-        <link rel="stylesheet" href="styles.css">
+        <title>Welcome to Bot</title>
+        <!-- Added Tailwind CSS for better styling -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
         <style>
             body {
-                font-family: Arial, sans-serif;
+                font-family: 'Inter', sans-serif;
                 margin: 0;
                 padding: 0;
-                background-color: #f4f4f4;
+                background-color: #1a1a1a;
+                color: #e0e0e0;
             }
             header {
-                background: #007BFF;
+                background: #2d3748;
                 color: white;
                 padding: 10px 0;
                 text-align: center;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             }
             nav {
                 margin: 10px 0;
             }
             nav a {
                 margin: 0 15px;
-                color: white;
+                color: #90cdf4;
                 text-decoration: none;
+                transition: color 0.3s ease;
+            }
+            nav a:hover {
+                color: #63b3ed;
             }
             .container {
                 width: 80%;
@@ -32,19 +39,33 @@
                 overflow: hidden;
             }
             section {
-                background: white;
+                background: #2d3748;
                 padding: 20px;
                 margin: 20px 0;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+            button {
+                background: #4299e1;
+                color: white;
+                padding: 10px 20px;
+                border: none;
                 border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+            button:hover {
+                background: #3182ce;
             }
             footer {
                 text-align: center;
                 padding: 10px 0;
-                background: #007BFF;
-                color: white;
+                background: #2d3748;
+                color: #e0e0e0;
                 position: relative;
                 bottom: 0;
                 width: 100%;
+                box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
             }
         </style>
     </head>
@@ -62,18 +83,18 @@
     
     <div class="container">
         <section id="about">
-            <h2>About the Website</h2>
+            <h2 class="text-xl font-bold mb-4">About the Website</h2>
             <p>This website offers an in-depth look into all the courses. You'll learn key concepts of your desired course.</p>
         </section>
     
         <section id="enroll">
-            <h2>Enroll Now</h2>
+            <h2 class="text-xl font-bold mb-4">Enroll Now</h2>
             <p>Ready to start your journey? Click the button below to enroll!</p>
-            <button onclick="window.location.href='enrollment.html'">Enroll Here</button>
+            <button onclick="window.location.href='enrollment.html'" class="mt-4">Enroll Here</button>
         </section>
     
         <section id="contact">
-            <h2>Contact Us</h2>
+            <h2 class="text-xl font-bold mb-4">Contact Us</h2>
             <p>If you have any questions, feel free to reach out!</p>
             <p>Email: info@coursewebsite.com</p>
         </section>
@@ -82,23 +103,12 @@
     <footer>
         <p>&copy; 2024 Courses Information. All rights reserved.</p>
     </footer>
-    
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dummy Website with Botpress Chatbot</title>
-
-</head>
-
-<body>
 
     <!-- Read PDF file -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
     <!-- Botpress Chatbot Scripts -->
-    
     <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2024/10/03/20/20241003205856-19POD559.js"></script>
-
 
     <script>
         let isBot = false;
@@ -163,7 +173,6 @@
                 };
             })
 
-
             // Automatically trigger the file input on page load
             fileInput.click();
 
@@ -198,5 +207,4 @@
     </script>
 
 </body>
-
 </html>
