@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to Bot</title>
-        <!-- Added Tailwind CSS for better styling -->
+        <title>Welcome to Internal Knowledge Base Chatbot</title>
+        <link rel="icon" type="image/png" sizes="32x32" href="https://st4.depositphotos.com/7865540/23787/i/450/depositphotos_237875732-stock-photo-robo-advisor-icon-concept-white.jpg">
+        <!-- Added Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
         <style>
             body {
@@ -67,9 +69,51 @@
                 width: 100%;
                 box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
             }
-            .main-container{
+            .main-container {
                 height: 100vh;
                 width: 100vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+            }
+            
+            /* New heading styles */
+            .main-container h1 {
+                font-family: 'Poppins', sans-serif;
+                font-weight: 600;
+                font-size: 2.5rem;
+                color: #ffffff;
+                text-align: center;
+                padding: 2rem;
+                max-width: 800px;
+                line-height: 1.3;
+                letter-spacing: 0.5px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+                background: linear-gradient(90deg, #6B46C1 0%, #805AD5 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: fadeIn 1s ease-in;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Media query for smaller screens */
+            @media (max-width: 768px) {
+                .main-container h1 {
+                    font-size: 1.8rem;
+                    padding: 1.5rem;
+                }
             }
         </style>
     </head>
